@@ -270,7 +270,7 @@
       <section title="URI Mapping Template">
         <t>This section defines a format for the URI template <xref target="RFC6570"/> used by an HC Proxy to inform its clients about the expected syntax for the Hosting HTTP URI.  This will then be used by the HTTP client to construct the Effective Request URI to be sent in the HTTP request to the HC Proxy.</t>
 
-        <t>When instantiated, aURI Mapping Template is always concatenated to an HC Proxy URI provided by the HC Proxy via discovery (see <xref target="section.discovery"/>), or by other means.</t>
+        <t>When instantiated, a URI Mapping Template is always concatenated to an HC Proxy URI provided by the HC Proxy via discovery (see <xref target="section.discovery"/>), or by other means.</t>
 
         <t>A simple form (<xref target="section.simple-form"/>) and an enhanced form (<xref target="section.enhanced-form"/>) are provided to fit different users' requirements.</t>
 
