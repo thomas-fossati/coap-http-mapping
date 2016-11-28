@@ -427,7 +427,7 @@
 
   <meta name="dct.creator" content="Castellani, A., Loreto, S., Rahman, A., Fossati, T., and E. Dijk" />
   <meta name="dct.identifier" content="urn:ietf:id:draft-ietf-core-http-mapping-17" />
-  <meta name="dct.issued" scheme="ISO8601" content="2016-11-27" />
+  <meta name="dct.issued" scheme="ISO8601" content="2016-11-28" />
   <meta name="dct.abstract" content="This document provides reference information for implementing a cross-protocol network proxy that performs translation from the HTTP protocol to CoAP (Constrained Application Protocol).  This will enable an HTTP client to access resources on a CoAP server through the proxy.  This document describes how an HTTP request is mapped to a CoAP request, and then how a CoAP response is mapped back to an HTTP response.  This includes guidelines for status code, URI, and media type mappings, as well as additional interworking advice." />
   <meta name="description" content="This document provides reference information for implementing a cross-protocol network proxy that performs translation from the HTTP protocol to CoAP (Constrained Application Protocol).  This will enable an HTTP client to access resources on a CoAP server through the proxy.  This document describes how an HTTP request is mapped to a CoAP request, and then how a CoAP response is mapped back to an HTTP response.  This includes guidelines for status code, URI, and media type mappings, as well as additional interworking advice." />
 
@@ -451,7 +451,7 @@
   <td class="right">S. Loreto</td>
 </tr>
 <tr>
-  <td class="left">Expires: May 31, 2017</td>
+  <td class="left">Expires: June 1, 2017</td>
   <td class="right">Ericsson</td>
 </tr>
 <tr>
@@ -480,7 +480,7 @@
 </tr>
 <tr>
   <td class="left"></td>
-  <td class="right">November 27, 2016</td>
+  <td class="right">November 28, 2016</td>
 </tr>
 
     	
@@ -500,7 +500,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on May 31, 2017.</p>
+<p>This Internet-Draft will expire on June 1, 2017.</p>
 <h1 id="rfc.copyrightnotice">
   <a href="#rfc.copyrightnotice">Copyright Notice</a>
 </h1>
@@ -596,6 +596,7 @@
 </dl>
 <h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#hc" id="hc">HTTP-to-CoAP Proxy</a></h1>
 <p id="rfc.section.3.p.1">An HC Proxy is accessed by an HTTP client that needs to fetch a resource on a CoAP server.  The HC Proxy handles the HTTP request by mapping it to the equivalent CoAP request, which is then forwarded to the appropriate CoAP server.  The received CoAP response is then mapped to an appropriate HTTP response and finally sent back to the originating HTTP client.</p>
+<p id="rfc.section.3.p.2">Section 10.2 of <a href="#RFC7252">[RFC7252]</a> defines basic normative requirements on HTTP-to-CoAP mapping.  This document provides additional details and guidelines for the implementation of an HC Proxy.</p>
 <div id="rfc.figure.1"/>
 <div id="fig-http-coap-deployment"/>
 <pre>

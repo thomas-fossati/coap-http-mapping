@@ -153,6 +153,8 @@
     <section title="HTTP-to-CoAP Proxy" anchor="hc">
       <t>An HC Proxy is accessed by an HTTP client that needs to fetch a resource on a CoAP server.  The HC Proxy handles the HTTP request by mapping it to the equivalent CoAP request, which is then forwarded to the appropriate CoAP server.  The received CoAP response is then mapped to an appropriate HTTP response and finally sent back to the originating HTTP client.</t>
 
+      <t>Section 10.2 of <xref target="RFC7252" /> defines basic normative requirements on HTTP-to-CoAP mapping.  This document provides additional details and guidelines for the implementation of an HC Proxy.</t>
+
       <!-- note any references to figure entities will use capitalization because they are named instances of the generic entities.  The instance name happens to be equal to the generic name.  -->
 
         <figure title="HTTP-To-CoAP Proxy Deployment Scenario" anchor="fig-http-coap-deployment">

@@ -5,14 +5,14 @@
 CoRE Working Group                                         A. Castellani
 Internet-Draft                                      University of Padova
 Intended status: Standards Track                               S. Loreto
-Expires: May 31, 2017                                           Ericsson
+Expires: June 1, 2017                                           Ericsson
                                                                A. Rahman
                                         InterDigital Communications, LLC
                                                               T. Fossati
                                                                    Nokia
                                                                  E. Dijk
                                                         Philips Lighting
-                                                       November 27, 2016
+                                                       November 28, 2016
 
 
           Guidelines for HTTP-to-CoAP Mapping Implementations
@@ -44,7 +44,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on May 31, 2017.
+   This Internet-Draft will expire on June 1, 2017.
 
 
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Castellani, et al.        Expires May 31, 2017                  [Page 1]
+Castellani, et al.        Expires June 1, 2017                  [Page 1]
 
 Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
@@ -79,37 +79,37 @@ Table of Contents
    2.  Terminology . . . . . . . . . . . . . . . . . . . . . . . . .   4
    3.  HTTP-to-CoAP Proxy  . . . . . . . . . . . . . . . . . . . . .   5
    4.  Use Cases . . . . . . . . . . . . . . . . . . . . . . . . . .   6
-   5.  URI Mapping . . . . . . . . . . . . . . . . . . . . . . . . .   6
-     5.1.  URI Terminology . . . . . . . . . . . . . . . . . . . . .   7
+   5.  URI Mapping . . . . . . . . . . . . . . . . . . . . . . . . .   7
+     5.1.  URI Terminology . . . . . . . . . . . . . . . . . . . . .   8
      5.2.  Null Mapping  . . . . . . . . . . . . . . . . . . . . . .   8
      5.3.  Default Mapping . . . . . . . . . . . . . . . . . . . . .   8
-       5.3.1.  Optional Scheme Omission  . . . . . . . . . . . . . .   8
+       5.3.1.  Optional Scheme Omission  . . . . . . . . . . . . . .   9
        5.3.2.  Encoding Caveats  . . . . . . . . . . . . . . . . . .   9
      5.4.  URI Mapping Template  . . . . . . . . . . . . . . . . . .   9
-       5.4.1.  Simple Form . . . . . . . . . . . . . . . . . . . . .   9
+       5.4.1.  Simple Form . . . . . . . . . . . . . . . . . . . . .  10
        5.4.2.  Enhanced Form . . . . . . . . . . . . . . . . . . . .  11
-     5.5.  Discovery . . . . . . . . . . . . . . . . . . . . . . . .  12
+     5.5.  Discovery . . . . . . . . . . . . . . . . . . . . . . . .  13
        5.5.1.  Examples  . . . . . . . . . . . . . . . . . . . . . .  13
-   6.  Media Type Mapping  . . . . . . . . . . . . . . . . . . . . .  14
-     6.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  14
+   6.  Media Type Mapping  . . . . . . . . . . . . . . . . . . . . .  15
+     6.1.  Overview  . . . . . . . . . . . . . . . . . . . . . . . .  15
      6.2.  'application/coap-payload' Media Type . . . . . . . . . .  16
-     6.3.  Loose Media Type Mapping  . . . . . . . . . . . . . . . .  16
-     6.4.  Media Type to Content Format Mapping Algorithm  . . . . .  17
-     6.5.  Content Transcoding . . . . . . . . . . . . . . . . . . .  18
-       6.5.1.  General . . . . . . . . . . . . . . . . . . . . . . .  18
-       6.5.2.  CoRE Link Format  . . . . . . . . . . . . . . . . . .  19
+     6.3.  Loose Media Type Mapping  . . . . . . . . . . . . . . . .  17
+     6.4.  Media Type to Content Format Mapping Algorithm  . . . . .  18
+     6.5.  Content Transcoding . . . . . . . . . . . . . . . . . . .  19
+       6.5.1.  General . . . . . . . . . . . . . . . . . . . . . . .  19
+       6.5.2.  CoRE Link Format  . . . . . . . . . . . . . . . . . .  20
        6.5.3.  Diagnostic Messages . . . . . . . . . . . . . . . . .  20
-   7.  Response Code Mapping . . . . . . . . . . . . . . . . . . . .  20
+   7.  Response Code Mapping . . . . . . . . . . . . . . . . . . . .  21
    8.  Additional Mapping Guidelines . . . . . . . . . . . . . . . .  23
      8.1.  Caching and Congestion Control  . . . . . . . . . . . . .  23
-     8.2.  Cache Refresh via Observe . . . . . . . . . . . . . . . .  23
+     8.2.  Cache Refresh via Observe . . . . . . . . . . . . . . . .  24
      8.3.  Use of CoAP Blockwise Transfer  . . . . . . . . . . . . .  24
      8.4.  CoAP Multicast  . . . . . . . . . . . . . . . . . . . . .  25
-     8.5.  Timeouts  . . . . . . . . . . . . . . . . . . . . . . . .  25
+     8.5.  Timeouts  . . . . . . . . . . . . . . . . . . . . . . . .  26
 
 
 
-Castellani, et al.        Expires May 31, 2017                  [Page 2]
+Castellani, et al.        Expires June 1, 2017                  [Page 2]
 
 Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
@@ -117,18 +117,18 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  26
      9.1.  New 'core.hc' Resource Type . . . . . . . . . . . . . . .  26
      9.2.  New 'coap-payload' Internet Media Type  . . . . . . . . .  26
-   10. Security Considerations . . . . . . . . . . . . . . . . . . .  27
-     10.1.  Multicast  . . . . . . . . . . . . . . . . . . . . . . .  28
+   10. Security Considerations . . . . . . . . . . . . . . . . . . .  28
+     10.1.  Multicast  . . . . . . . . . . . . . . . . . . . . . . .  29
      10.2.  Traffic Overflow . . . . . . . . . . . . . . . . . . . .  29
-     10.3.  Handling Secured Exchanges . . . . . . . . . . . . . . .  29
+     10.3.  Handling Secured Exchanges . . . . . . . . . . . . . . .  30
      10.4.  URI Mapping  . . . . . . . . . . . . . . . . . . . . . .  30
-   11. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  30
+   11. Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  31
    12. References  . . . . . . . . . . . . . . . . . . . . . . . . .  31
      12.1.  Normative References . . . . . . . . . . . . . . . . . .  31
-     12.2.  Informative References . . . . . . . . . . . . . . . . .  32
+     12.2.  Informative References . . . . . . . . . . . . . . . . .  33
    Appendix A.  Media Type Mapping Source Code . . . . . . . . . . .  34
    Appendix B.  Change Log . . . . . . . . . . . . . . . . . . . . .  38
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  42
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  43
 
 1.  Introduction
 
@@ -165,7 +165,7 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
 
-Castellani, et al.        Expires May 31, 2017                  [Page 3]
+Castellani, et al.        Expires June 1, 2017                  [Page 3]
 
 Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
@@ -221,7 +221,7 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
 
-Castellani, et al.        Expires May 31, 2017                  [Page 4]
+Castellani, et al.        Expires June 1, 2017                  [Page 4]
 
 Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
@@ -251,6 +251,36 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    mapped to an appropriate HTTP response and finally sent back to the
    originating HTTP client.
 
+   Section 10.2 of [RFC7252] defines basic normative requirements on
+   HTTP-to-CoAP mapping.  This document provides additional details and
+   guidelines for the implementation of an HC Proxy.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                  [Page 5]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
 
                                                Constrained Network
                                               .-------------------.
@@ -274,13 +304,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
              Figure 1: HTTP-To-CoAP Proxy Deployment Scenario
-
-
-
-Castellani, et al.        Expires May 31, 2017                  [Page 5]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    Figure 1 illustrates an example deployment scenario.  There, an HC
    Proxy is located at the boundary of the Constrained Network domain
@@ -308,6 +331,13 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
        furthermore configured to only pass through GET requests in order
        to protect the constrained network.
 
+
+
+Castellani, et al.        Expires June 1, 2017                  [Page 6]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    3.  Smartphone and home sensor: A smartphone can access directly a
        CoAP home sensor using a mutually authenticated 'https' request,
        provided its home router runs an HC Proxy and is configured with
@@ -329,15 +359,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    Though, in principle, a CoAP URI could be directly used by an HTTP
    client to de-reference a CoAP resource through an HC Proxy, the
    reality is that all major web browsers, networking libraries and
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                  [Page 6]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    command line tools do not allow making HTTP requests using URIs with
    a scheme 'coap' or 'coaps'.
 
@@ -365,6 +386,14 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    o  The discovery mechanism based on CoRE Link Format [RFC6690]
       through which clients of an HC Proxy can dynamically learn about
+
+
+
+Castellani, et al.        Expires June 1, 2017                  [Page 7]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
       the supported URI Mapping Template(s), as well as the URI where
       the HC Proxy function is anchored.
 
@@ -386,14 +415,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    Hosting HTTP URI:
            URI that conforms to syntax in Section 2.7 of [RFC7230].  Its
            authority component refers to an HC Proxy, whereas path and/
-
-
-
-Castellani, et al.        Expires May 31, 2017                  [Page 7]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
            or query component(s) embed the information used by an HC
            Proxy to extract the Target CoAP URI.
 
@@ -420,6 +441,15 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    HTTP URI would be https://p.example.com/hc/coap://s.example.com/
    light.
 
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                  [Page 8]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    Provided a correct Target CoAP URI, the Hosting HTTP URI resulting
    from the default mapping will be a syntactically valid HTTP URI.
    Furthermore, the Target CoAP URI can always be extracted
@@ -442,13 +472,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    If no prior mutual agreement exists between the client and the HC
    Proxy, then a Target CoAP URI without the scheme component is
    syntactically incorrect, and therefore:
-
-
-
-Castellani, et al.        Expires May 31, 2017                  [Page 8]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    o  It MUST NOT be emitted by clients;
 
@@ -475,6 +498,14 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    This section defines a format for the URI template [RFC6570] used by
    an HC Proxy to inform its clients about the expected syntax for the
    Hosting HTTP URI.  This will then be used by the HTTP client to
+
+
+
+Castellani, et al.        Expires June 1, 2017                  [Page 9]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    construct the Effective Request URI to be sent in the HTTP request to
    the HC Proxy.
 
@@ -500,12 +531,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    definition to represent a Target CoAP URI:
 
 
-
-Castellani, et al.        Expires May 31, 2017                  [Page 9]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
      tu = [ ( "coap:" / "coaps:" ) "//" ] host [ ":" port ] path-abempty
           [ "?" query ]
 
@@ -523,6 +548,18 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    template variables.
 
    1.  Target CoAP URI is a query argument of the Hosting HTTP URI:
+
+
+
+
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 10]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
    ?target_uri={+tu}
@@ -554,14 +591,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    => https://p.example.com/hc/forward/coaps://s.example.com/light
 
 
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 10]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    3.  Target CoAP URI is a query argument of the Hosting HTTP URI;
        client decides to omit the scheme because a default is agreed
        beforehand between client and proxy:
@@ -579,6 +608,15 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    The enhanced form can be used to express more sophisticated mappings
    of the Target CoAP URI into the Hosting HTTP URI, i.e., mappings that
    do not fit into the simple form.
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 11]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
 
    There MUST be at most one instance of each of the following template
    variables in a template definition:
@@ -607,17 +645,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
        in query component:
 
 
-
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 11]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
        {+s}/{+hp}{+p}{+qq}
 
        coap://s.example.com/light
@@ -632,6 +659,19 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
    2.  Target CoAP URI components split in individual query arguments:
+
+
+
+
+
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 12]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
      ?s={+s}&hp={+hp}&p={+p}&q={+q}
@@ -667,13 +707,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    If a "hct" attribute is present in the returned link, then a client
    MUST use it to create the Hosting HTTP URI.
 
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 12]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    The URI mapping SHOULD be discoverable (as specified in [RFC6690]) on
    both the HTTP and the CoAP side of the HC Proxy, with one important
    difference: on the CoAP side the link associated with the "core.hc"
@@ -689,6 +722,12 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
       may discover the public HC Proxy before leaving the home network.
       Then when outside the home network, the smartphone will be able to
       query the appropriate home sensor.
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 13]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
        Req:  GET coap://[ff02::1]/.well-known/core?rt=core.hc
@@ -716,20 +755,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    o  using the 'application/link-format' content type:
 
 
-
-
-
-
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 13]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
        Req:  GET /.well-known/core?rt=core.hc HTTP/1.1
              Host: p.example.com
 
@@ -752,6 +777,13 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
              Content-Length: 31
 
              [{"href":"/hc/","rt":"core.hc"}]
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 14]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
    o  using the Link header:
@@ -778,14 +810,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    Content-Type and Content-Encoding HTTP headers into a single CoAP
    Content-Format option, whereas GET needs to map Accept and Accept-
    Encoding HTTP headers into a single CoAP Accept option.  To generate
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 14]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    the HTTP response, the CoAP Content-Format option is mapped back to a
    suitable HTTP Content-Type and Content-Encoding combination.
 
@@ -809,6 +833,15 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    (with the exception examined in Section 6.2), the HTTP to CoAP
    direction is more problematic because the source set, i.e.,
    potentially 1000+ IANA registered media types, is much bigger than
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 15]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    the destination set, i.e., the mere 6 values initially defined in
    Section 12.3 of [RFC7252].
 
@@ -830,17 +863,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    cost of allowing more attack surface.  In fact, as a result of such
    strategy, payloads would be forwarded more liberally across the
    unconstrained/constrained network boundary of the communication path.
-
-
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 15]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
 6.2.  'application/coap-payload' Media Type
 
@@ -866,6 +888,16 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    header with an "application/coap-payload", and return an appropriate
    client error instead.
 
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 16]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
 6.3.  Loose Media Type Mapping
 
    By structuring the type information in a super-class (e.g., "text")
@@ -890,14 +922,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    Table 1 defines the default lookup table for the "loose" media type
    mapping.  It is expected that an implementation can refine it either
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 16]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    given application-specific knowledge, or because new Content-Formats
    are defined.  Given an input media type, the table returns its best
    generalized media type using the most specific match i.e., the table
@@ -920,6 +944,15 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    The "loose" media type mapping is an OPTIONAL feature.
    Implementations supporting this kind of mapping should provide a
    flexible way to define the set of media type generalizations allowed.
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 17]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
 
 6.4.  Media Type to Content Format Mapping Algorithm
 
@@ -945,19 +978,36 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    o  coap_cf_registry is a lookup table matching the CoAP Content
       Format Registry;
 
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 17]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    o  loose_mapper is an optional lookup table describing the loose
       media type mappings (e.g., the one defined in Table 1);
 
    The full source code is provided in Appendix A.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 18]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
  def mt2cf(media_type, encoding=None,
@@ -1003,17 +1053,18 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    However, there are a few important factors to keep in mind when
    enabling a transcoding function:
 
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 18]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    1.  Maliciously crafted inputs coming from the HTTP side might
        inflate in size (see for example Section 4.2 of [RFC7049]),
        therefore creating a security threat for both the HC Proxy and
        the target resource;
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 19]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
 
    2.  Transcoding can lose information in non-obvious ways.  For
        example, encoding a XML document using schema-informed EXI
@@ -1056,16 +1107,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    Therefore, CoRE Link Format payload should only be transcoded at the
    risk and discretion of the proxy implementer.
 
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 19]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
 6.5.3.  Diagnostic Messages
 
    CoAP responses may, in certain error cases, contain a diagnostic
@@ -1073,6 +1114,14 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    in Section 5.5.2 of [RFC7252].  If present, the CoAP response
    diagnostic payload SHOULD be copied in the HTTP response body.  The
    CoAP diagnostic message MUST NOT be copied into the HTTP reason-
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 20]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    phrase, since it potentially contains CR-LF characters which are
    incompatible with HTTP reason-phrase syntax.
 
@@ -1084,43 +1133,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    responses are possible based on the same CoAP response code,
    depending on the conditions cited in the Notes (third column and text
    below table).
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 20]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    +-------------------------------+----------------------------+------+
    | CoAP Response Code            | HTTP Status Code           | Note |
@@ -1158,6 +1170,14 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    Notes:
 
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 21]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    1.   A CoAP server may return an arbitrary format payload along with
         this response.  If present, this payload MUST be returned as
         entity in the HTTP 201 response.  Section 7.3.2 of [RFC7231]
@@ -1170,13 +1190,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
         is returned for DELETE/POST/PUT, and code 204 if not.  Hence, a
         proxy MUST transfer any CoAP payload contained in a CoAP 2.02
         response to the HTTP client using a 200 OK response.
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 21]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    3.   HTTP code 304 (Not Modified) is sent if the HTTP client
         performed a conditional HTTP request and the CoAP server
@@ -1213,6 +1226,14 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
         granular information about the supported methods for the
         requested resource (e.g., via a Resource Directory
         ([I-D.ietf-core-resource-directory])) then it MAY send back a
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 22]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
         HTTP 405 (Method Not Allowed) with a properly filled in "Allow"
         response-header field (Section 7.4.1 of [RFC7231]).
 
@@ -1225,14 +1246,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    10.  Only used in CoAP blockwise transfer [RFC7959] between HC Proxy
         and CoAP server; never translated into a HTTP response.
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 22]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    11.  Only returned to the HTTP client if the HC Proxy was unable to
         successfully complete the request by retrying it with CoAP
@@ -1265,6 +1278,18 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    representation fresh while minimizing the amount of CoAP traffic in
    the constrained network (see Section 8.2).
 
+
+
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 23]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
 8.2.  Cache Refresh via Observe
 
    There are cases where using the CoAP observe protocol [RFC7641] to
@@ -1281,14 +1306,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    handled via ETag validation or by establishing an observation on R.
    The idea being that the HC Proxy proactively installs an observation
    on a "popular enough" resource and actively monitors:
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 23]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    a.  Its update pattern on the CoAP side; and
 
@@ -1321,6 +1338,14 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    responded with 4.13 (Request Entity Too Large) to the original
    request.  An HC Proxy SHOULD attempt to use blockwise transfer when
    sending a CoAP PUT or POST request message that is larger than
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 24]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    BLOCKWISE_THRESHOLD bytes.  The value of BLOCKWISE_THRESHOLD is
    implementation-specific; for example, it can be:
 
@@ -1338,13 +1363,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    calculated, should be configurable in a proxy implementation.  The
    maximum block size the proxy will attempt to use in CoAP requests
    should also be configurable.
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 24]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    The HC Proxy SHOULD detect CoAP endpoints not supporting blockwise
    transfers.  This can be done by checking for a 4.02 (Bad Option)
@@ -1376,6 +1394,14 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    For further considerations related to the handling of multicast
    requests, see Section 10.1.
 
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 25]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
 8.5.  Timeouts
 
    If the CoAP server takes a long time in responding, the HTTP client
@@ -1391,16 +1417,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    where MAX_RTT is defined in [RFC7252] and MAX_SERVER_RESPONSE_DELAY
    is defined in [RFC7390].
-
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 25]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
 9.  IANA Considerations
 
@@ -1435,6 +1451,13 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    by the "CoAP Content-Formats" subregistry that is part of the
    "Constrained RESTful Environments (CoRE) Parameters" registry.)
 
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 26]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    Optional parameters: None
 
    Encoding considerations: Common use is BINARY.  The specific CoAP
@@ -1450,13 +1473,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    encode the mandatory 'cf' parameter in CoAP.
 
    Published specification: (this I-D - TBD)
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 26]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    Applications that use this media type: HTTP-to-CoAP Proxies.
 
@@ -1491,6 +1507,13 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    Change controller: IETF
 
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 27]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    Provisional registration: No
 
 10.  Security Considerations
@@ -1506,14 +1529,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    it, keeping in mind that, in most cases, it has fewer limitations
    than the constrained devices it is serving.  In particular, its
    quality of implementation and operation - i.e., use of current
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 27]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    software development practices, careful selection of third party
    libraries, sane configuration defaults, an expedited way to upgrade a
    running instance - are all essential attributes of the HC Proxy.
@@ -1545,6 +1560,16 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    security issues related to the translation, caching and forwarding
    functionality exposed by an HC Proxy.
 
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 28]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
 10.1.  Multicast
 
    Multicast requests impose a non-trivial cost on the constrained
@@ -1562,14 +1587,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    requestor of a multicast resource be strongly authenticated.  If
    privacy and / or security are first class requirements, for example
    whenever the HTTP request transits through the public Internet, the
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 28]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    request SHOULD be transported over a mutually authenticated and
    encrypted TLS connection.
 
@@ -1597,6 +1614,18 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    exposed multicast resources, so that only known/authorized users can
    access such URIs.
 
+
+
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 29]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
 10.3.  Handling Secured Exchanges
 
    An HTTP request can be sent to the HC Proxy over a secured
@@ -1618,14 +1647,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    By default, an HC Proxy SHOULD reject any secured CoAP client request
    (i.e., one with a 'coaps' scheme) if there is no configured security
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 29]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    policy mapping.  This recommendation may be relaxed in case the
    destination network is believed to be secured by other means.
    Assuming that CoAP nodes are isolated behind a firewall as in the HC
@@ -1652,6 +1673,15 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    The internal CoAP Target resource is totally transparent from
    outside.
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 30]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
       Mitigation: implement an HTTPS-only interface, which makes the
       Target CoAP URI totally opaque to a passive attacker.
 
@@ -1674,13 +1704,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    The research leading to these results has received funding from the
    European Community's Seventh Framework Programme [FP7/2007-2013]
    under grant agreement n.251557.
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 30]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
 12.  References
 
@@ -1706,6 +1729,15 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
               DOI 10.17487/RFC5234, January 2008,
               <http://www.rfc-editor.org/info/rfc5234>.
 
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 31]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    [RFC5246]  Dierks, T. and E. Rescorla, "The Transport Layer Security
               (TLS) Protocol Version 1.2", RFC 5246,
               DOI 10.17487/RFC5246, August 2008,
@@ -1729,14 +1761,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
               Protocol (HTTP/1.1): Semantics and Content", RFC 7231,
               DOI 10.17487/RFC7231, June 2014,
               <http://www.rfc-editor.org/info/rfc7231>.
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 31]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    [RFC7232]  Fielding, R., Ed. and J. Reschke, Ed., "Hypertext Transfer
               Protocol (HTTP/1.1): Conditional Requests", RFC 7232,
@@ -1763,6 +1787,13 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
               DOI 10.17487/RFC7959, August 2016,
               <http://www.rfc-editor.org/info/rfc7959>.
 
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 32]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
 12.2.  Informative References
 
    [Fielding]
@@ -1784,15 +1815,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    [OpenSSL]  The OpenSSL Project, , "ca - sample minimal CA
               application", 1998-2016,
               <https://www.openssl.org/docs/manmaster/man1/ca.html>.
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 32]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    [RFC2616]  Fielding, R., Gettys, J., Mogul, J., Frystyk, H.,
               Masinter, L., Leach, P., and T. Berners-Lee, "Hypertext
@@ -1818,6 +1840,16 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
               Representation (CBOR)", RFC 7049, DOI 10.17487/RFC7049,
               October 2013, <http://www.rfc-editor.org/info/rfc7049>.
 
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 33]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    [RFC7228]  Bormann, C., Ersue, M., and A. Keranen, "Terminology for
               Constrained-Node Networks", RFC 7228,
               DOI 10.17487/RFC7228, May 2014,
@@ -1839,16 +1871,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
               Navara, E., O'Connor, E., and S. Pfeiffer, "HTML5", W3C
               Recommendation REC-html5-20141028, 2014,
               <http://www.w3.org/TR/2014/REC-html5-20141028>.
-
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 33]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
 Appendix A.  Media Type Mapping Source Code
 
@@ -1876,6 +1898,14 @@ class CoAPContentFormatRegistry(object):
 # as of 2016/10/24.
     LOOKUP_TABLE = {
         ("text/plain;charset=utf-8", None): TEXT_PLAIN,
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 34]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
         ("application/link-format", None): LINK_FORMAT,
         ("application/xml", None): XML,
         ("application/octet-stream", None): OCTET_STREAM,
@@ -1898,14 +1928,6 @@ class LooseMediaTypeMapper(object):
     # compared to less specific types.
     # This code only performs a shallow validation of acceptable
     # characters, and assumes overall validation of media type and
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 34]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
     # subtype has been done beforehand.
     LOOKUP_TABLE = [
         (re.compile("application/.+\+xml$"), "application/xml"),
@@ -1932,6 +1954,14 @@ def mt2cf(media_type, encoding=None,
        its optional encoding.  The current (as of 2016/10/24) CoAP
        Content Format Registry is supplied by default.  An optional
        'loose-mapping' implementation can be supplied by the caller."""
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 35]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
     assert media_type is not None
     assert coap_cf_registry is not None
 
@@ -1953,14 +1983,6 @@ class TestMT2CF(unittest.TestCase):
     def testMissingContentType(self):
         with self.assertRaises(AssertionError):
             mt2cf(None)
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 35]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
     def testMissingContentFormatRegistry(self):
         with self.assertRaises(AssertionError):
@@ -1988,6 +2010,14 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
     def testJSON(self):
         self.assertEqual(mt2cf("application/json"),
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 36]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
                          CoAPContentFormatRegistry.JSON)
 
     def testCBOR(self):
@@ -2010,14 +2040,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
             CoAPContentFormatRegistry.XML)
 
     def testLooseXML2(self):
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 36]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
         self.assertEqual(
             mt2cf(
                 "text/xml",
@@ -2045,6 +2067,13 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
                 loose_mapper=LooseMediaTypeMapper()),
             CoAPContentFormatRegistry.TEXT_PLAIN)
 
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 37]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
     def testLooseUnknown(self):
         self.assertEqual(
             mt2cf(
@@ -2066,14 +2095,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
     def testLooseInvalidUnexpectedCharInTheMiddle(self):
         self.assertFalse(
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 37]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
             mt2cf(
                 "application /somesubtype",
                 loose_mapper=LooseMediaTypeMapper()))
@@ -2102,6 +2123,13 @@ Appendix B.  Change Log
 
    o  Intended status from Informational to Standards Track;
 
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 38]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    o  Stephen Farrell's DISCUSS
 
    o  Added 2.31 and 4.08 CoAP response codes to the Response Code
@@ -2122,13 +2150,6 @@ Appendix B.  Change Log
    o  Suresh Krishnan DISCUSS;
 
    o  Spencer Dawkins' DISCUSS and COMMENT;
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 38]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    Changes from ietf-13 to ietf-14:
 
@@ -2156,6 +2177,15 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    Changes from ietf-09 to ietf-10:
 
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 39]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
    o  Addressed Ticket #401 - Clarified that draft covers not only
       Reverse HC Proxy but that many parts also apply to Forward and
       Interception Proxies.
@@ -2178,13 +2208,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
       revision due to outdated xml2rfc conversion tool local cache.
 
    o  Various editorial improvements.
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 39]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
 
    Changes from ietf-08 to ietf-09:
 
@@ -2209,6 +2232,15 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    o  Addressed Ticket #377 - Added IANA section that defines a new HTTP
       media type "application/coap-payload" and created new Section 6.2
       on how to use it.
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 40]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
 
    o  Addressed Ticket #376 - Updated Table 2 (and corresponding note 7)
       to indicate that a CoAP 4.05 (Method Not Allowed) Response Code
@@ -2235,13 +2267,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    o  Addressed Ticket #376 (CoAP 4.05 response can't be translated to
       HTTP 405 by HC Proxy) in Section 7 by use of empty 'Allow' header;
 
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 40]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    o  Removed details on the pros and cons of HC Proxy placement
       options;
 
@@ -2265,6 +2290,13 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    o  Addressed Ticket #366 (Mapping of CoRE Link Format payloads to be
       valid in HTTP Domain?) in Section 6.3.3.2 (Content Transcoding -
       CORE Link Format);
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 41]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
 
    o  Addressed Ticket #375 (Add requirement on mapping of CoAP
       diagnostic payload) in Section 6.3.3.3 (Content Transcoding -
@@ -2291,13 +2323,6 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
    o  Various editorial improvements.
 
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 41]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
-
-
    Changes from ietf-02 to ietf-03:
 
    o  Closed Ticket #351 "Add security implications of proposed default
@@ -2319,6 +2344,16 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    o  Added URI mapping proposals to Section 4 as per the Email
       proposals to WG mailing list from Esko.
 
+
+
+
+
+
+Castellani, et al.        Expires June 1, 2017                 [Page 42]
+
+Internet-Draft            HTTP-to-CoAP Mapping             November 2016
+
+
 Authors' Addresses
 
    Angelo P. Castellani
@@ -2337,21 +2372,6 @@ Authors' Addresses
    Finland
 
    Email: salvatore.loreto@ericsson.com
-
-
-
-
-
-
-
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 42]
-
-Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
    Akbar Rahman
@@ -2385,24 +2405,4 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Castellani, et al.        Expires May 31, 2017                 [Page 43]
+Castellani, et al.        Expires June 1, 2017                 [Page 43]
