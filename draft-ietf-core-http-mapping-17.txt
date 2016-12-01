@@ -509,8 +509,8 @@ Internet-Draft            HTTP-to-CoAP Mapping             November 2016
    construct the Effective Request URI to be sent in the HTTP request to
    the HC Proxy.
 
-   When instantiated, aURI Mapping Template is always concatenated to an
-   HC Proxy URI provided by the HC Proxy via discovery (see
+   When instantiated, a URI Mapping Template is always concatenated to
+   an HC Proxy URI provided by the HC Proxy via discovery (see
    Section 5.5), or by other means.
 
    A simple form (Section 5.4.1) and an enhanced form (Section 5.4.2)
