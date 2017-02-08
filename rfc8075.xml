@@ -35,23 +35,8 @@
 <?rfc subcompact="no"?>
 <rfc ipr="trust200902" number="8075" category="std" submissionType="IETF" consensus="yes">
   <front>
-<!--[rfced] In order to expand CoAP in the title, we suggest one of
-the following updates.  Please let us know which is preferable or
-if you have another suggestion.
-
-Original:
-Guidelines for HTTP-to-CoAP Mapping Implementations
-
-Perhaps:
-Mapping Implementation Guidelines for the Translation of
-the HTTP Protocol to the Constrained Application Protocol (CoAP)
-
-Perhaps:
-Guidelines for Mapping Implementations: HTTP to the Constrained Application Protocol (CoAP)
--->
-
     <title abbrev="HTTP-to-CoAP Mapping">
-     Guidelines for HTTP-to-CoAP Mapping Implementations
+     Guidelines for Mapping Implementations: HTTP to the Constrained Application Protocol (CoAP)
     </title>
     <author initials="A.P." surname="Castellani" fullname="Angelo P. Castellani">
       <organization>University of Padova</organization>
@@ -141,7 +126,7 @@ Guidelines for Mapping Implementations: HTTP to the Constrained Application Prot
           <t><xref target="hc"/> introduces the HTTP-to-CoAP proxy;</t>
           <t><xref target="usecases"/> lists use cases in which HTTP clients need to contact CoAP servers;</t>
           <t><xref target="URI-mapping"/> introduces a null, default, and advanced HTTP-to-CoAP URI mapping syntax;</t>
-          <t><xref target="hc-media"/> describes how to map HTTP media types to CoAP content formats, and vice versa;</t>
+          <t><xref target="hc-media"/> describes how to map HTTP media types to CoAP content-formats, and vice versa;</t>
           <t><xref target="hc-resp"/> describes how to map CoAP responses to HTTP responses;</t>
           <t><xref target="hc-additional"/> describes additional mapping guidelines related to caching, congestion, timeouts, etc.; and</t>
           <t><xref target="sec"/> discusses the possible security impact of HTTP-to-CoAP protocol mapping.</t>
@@ -155,9 +140,9 @@ Guidelines for Mapping Implementations: HTTP to the Constrained Application Prot
 
         <t hangText="HC Proxy"><vspace/>A proxy performing a cross-protocol mapping, in the context of this document an HTTP-to-CoAP (HC) mapping. Specifically, the HC Proxy acts as an HTTP server and a CoAP client.  The HC Proxy can take on the role of a Forward, Reverse, or Interception Proxy.</t>
 
-       <t hangText="Forward Proxy (or Forward HC Proxy)"><vspace/>A message-forwarding agent that is selected by the HTTP client, usually via local configuration rules, to receive requests for some type(s) of absolute URI and to attempt to satisfy those requests via translation to the protocol indicated by the absolute URI.  The user decides (is willing) to use the proxy as the forwarding/dereferencing agent for a predefined subset of the URI space. In <xref target="RFC7230"/>, this is called a "proxy".  <xref target="RFC7252"/> defines Forward-Proxy similarly.</t>
+       <t hangText="forward-proxy"><vspace/>A message-forwarding agent that is selected by the HTTP client, usually via local configuration rules, to receive requests for some type(s) of absolute URI and to attempt to satisfy those requests via translation to the protocol indicated by the absolute URI.  The user decides (is willing) to use the proxy as the forwarding/dereferencing agent for a predefined subset of the URI space. In <xref target="RFC7230"/>, this is called a "proxy".  <xref target="RFC7252"/> defines forward-proxy similarly.</t>
 
-       <t hangText="Reverse Proxy (or Reverse HC Proxy)"><vspace/>As in <xref target="RFC7230"/>, a receiving agent that acts as a layer above some other server(s) and translates the received requests to the underlying server's protocol.  A Reverse HC Proxy behaves as an origin (HTTP) server on its connection from the HTTP client.  The HTTP client uses the "origin-form" (Section 5.3.1 of <xref target="RFC7230"/>) as a request-target URI.  (Note that a Reverse Proxy appears to an HTTP client as an origin server while a Forward Proxy does not. So, when communicating with a Reverse Proxy, a client may be unaware it is communicating with a proxy at all.)</t>
+       <t hangText="reverse-proxy"><vspace/>As in <xref target="RFC7230"/>, a receiving agent that acts as a layer above some other server(s) and translates the received requests to the underlying server's protocol.  A reverse-proxy behaves as an origin (HTTP) server on its connection from the HTTP client.  The HTTP client uses the "origin-form" (Section 5.3.1 of <xref target="RFC7230"/>) as a request-target URI.  (Note that a reverse-proxy appears to an HTTP client as an origin server while a forward-proxy does not. So, when communicating with a reverse-proxy, a client may be unaware it is communicating with a proxy at all.)</t>
 
        <t hangText="Interception Proxy (or Interception HC Proxy)"><vspace/>As in <xref target="RFC3040"/>, a proxy that receives inbound HTTP traffic flows through the process of traffic redirection, transparent to the HTTP client.</t>
       </list></t>
@@ -180,7 +165,7 @@ Guidelines for Mapping Implementations: HTTP to the Constrained Application Prot
                                        ||                         ||
   .--------.  HTTP Request   .------------.  CoAP Req  .------.   ||
   |  HTTP  |---------------->|HTTP-to-CoAP|----------->| CoAP |   ||
-  | Client |<----------------|   Proxy    |<-----------|Server|   ||
+  | Client |<----------------|   Proxy    |<-----------|server|   ||
   '--------'  HTTP Response  '------------'  CoAP Resp '------'   ||
                                        ||                         ||
                                        ||   .------.              ||
@@ -222,7 +207,7 @@ Guidelines for Mapping Implementations: HTTP to the Constrained Application Prot
       <t>To this end, the remainder of this section will identify:
         <list style="symbols">
           <t>The default mechanism to map a CoAP URI into an HTTP URI;</t>
-          <t>The URI template format to express a class of CoAP-HTTP URI mapping functions; and</t>
+          <t>The URI Template format to express a class of CoAP-HTTP URI mapping functions; and</t>
           <t>The discovery mechanism based on "Constrained RESTful Environments (CoRE) Link Format" <xref target="RFC6690"/> through which clients of an HC Proxy can dynamically learn about the supported URI mapping template(s), as well as the URI where the HC Proxy function is anchored.</t>
         </list>
       </t>
@@ -238,11 +223,11 @@ Guidelines for Mapping Implementations: HTTP to the Constrained Application Prot
       </section>
 
       <section title="Null Mapping" anchor="section.null-mapping">
-        <t>The null mapping is the case where there is no Target CoAP URI appended to the HC Proxy URI.  In other words, it is a "pure" HTTP URI that is sent to the HC Proxy.  This would typically occur in situations like use case #1 described in <xref target="usecases"/>, and the proxy would typically be a Reverse Proxy. In this scenario, the HC Proxy will determine through its own private algorithms what the Target CoAP URI should be.</t>
+        <t>The null mapping is the case where there is no Target CoAP URI appended to the HC Proxy URI.  In other words, it is a "pure" HTTP URI that is sent to the HC Proxy.  This would typically occur in situations like use case #1 described in <xref target="usecases"/>, and the proxy would typically be a reverse-proxy. In this scenario, the HC Proxy will determine through its own private algorithms what the Target CoAP URI should be.</t>
       </section>
 
       <section title="Default Mapping" anchor="section.default-mapping">
-        <t>The default mapping is for the Target CoAP URI to be appended as is (with the only caveat discussed in <xref target="section.encoding-caveats"/>) to the HC Proxy URI, to form the Hosting HTTP URI.  This is the Effective Request URI (see Section 5.5 of <xref target="RFC7230"/>) that will then be sent by the HTTP client in the HTTP request to the HC Proxy.</t>
+        <t>The default mapping is for the Target CoAP URI to be appended as is (with the only caveat discussed in <xref target="section.encoding-caveats"/>) to the HC Proxy URI, to form the Hosting HTTP URI.  This is the effective request URI (see Section 5.5 of <xref target="RFC7230"/>) that will then be sent by the HTTP client in the HTTP request to the HC Proxy.</t>
 
         <t>For example: given an HC Proxy URI https://p.example.com/hc/ and a Target CoAP URI coap://s.example.com/light, the resulting Hosting HTTP URI would be https://p.example.com/hc/coap://s.example.com/light.</t>
 
@@ -268,13 +253,13 @@ Guidelines for Mapping Implementations: HTTP to the Constrained Application Prot
       </section> 
 
       <section title="URI Mapping Template">
-        <t>This section defines a format for the URI template <xref target="RFC6570"/> used by an HC Proxy to inform its clients about the expected syntax for the Hosting HTTP URI.  This will then be used by the HTTP client to construct the Effective Request URI to be sent in the HTTP request to the HC Proxy.</t>
+        <t>This section defines a format for the URI Template <xref target="RFC6570"/> used by an HC Proxy to inform its clients about the expected syntax for the Hosting HTTP URI.  This will then be used by the HTTP client to construct the effective request URI to be sent in the HTTP request to the HC Proxy.</t>
 
         <t>When instantiated, a URI mapping template is always concatenated to an HC Proxy URI provided by the HC Proxy via discovery (see <xref target="section.discovery"/>), or by other means.</t>
 
         <t>A simple form (<xref target="section.simple-form"/>) and an enhanced form (<xref target="section.enhanced-form"/>) are provided to fit different users' requirements.</t>
 
-        <t>Both forms are expressed as Level 2 URI templates <xref target="RFC6570"/> to take care of the expansion of values that are allowed to include reserved URI characters.  The syntax of all URI formats is specified in this section in Augmented Backus-Naur Form (ABNF) <xref target="RFC5234"/>.</t>
+        <t>Both forms are expressed as Level 2 URI Templates <xref target="RFC6570"/> to take care of the expansion of values that are allowed to include reserved URI characters.  The syntax of all URI formats is specified in this section in Augmented Backus-Naur Form (ABNF) <xref target="RFC5234"/>.</t>
 
         <section title="Simple Form" anchor="section.simple-form">
           <t>The simple form MUST be used for mappings where the Target CoAP URI is going to be copied (using rules of <xref target="section.encoding-caveats"/>) at some fixed position into the Hosting HTTP URI.</t>
@@ -444,7 +429,7 @@ coap://s.example.com/light
                 </figure>
               </t>
  
-              <t>The second example -- also on the CoAP side of the HC Proxy -- uses a custom template, i.e., one where the CoAP URI is carried inside the query component, thus the returned link carries the URI template to be used in an explicit "hct" attribute:
+              <t>The second example -- also on the CoAP side of the HC Proxy -- uses a custom template, i.e., one where the CoAP URI is carried inside the query component, thus the returned link carries the URI Template to be used in an explicit "hct" attribute:
                 <figure>
                   <artwork>
                     <![CDATA[
@@ -517,7 +502,7 @@ coap://s.example.com/light
 
     <section title="Media Type Mapping" anchor="hc-media">
       <section title="Overview">
-        <t>An HC Proxy needs to translate HTTP media types (Section 3.1.1.1 of <xref target="RFC7231"/>) and content encodings (Section 3.1.2.2 of <xref target="RFC7231"/>) into CoAP content formats (Section 12.3 of <xref target="RFC7252"/>), and vice versa.</t>
+        <t>An HC Proxy needs to translate HTTP media types (Section 3.1.1.1 of <xref target="RFC7231"/>) and content codings (Section 3.1.2.2 of <xref target="RFC7231"/>) into CoAP content-formats (Section 12.3 of <xref target="RFC7252"/>), and vice versa.</t>
 
         <t>Media type translation can happen in GET, PUT, or POST requests going from HTTP to CoAP, and in 2.xx (i.e., successful) responses going from CoAP to HTTP.  Specifically, PUT and POST need to map both the Content-Type and Content-Encoding HTTP headers into a single CoAP Content-Format option, whereas GET needs to map Accept and Accept-Encoding HTTP headers into a single CoAP Accept option.  To generate the HTTP response, the CoAP Content-Format option is mapped back to a suitable HTTP Content-Type and Content-Encoding combination.</t>
 
@@ -531,7 +516,7 @@ The HC Proxy thus disregards the Accept/Accept-* header fields by treating the r
 
         <t>Depending on the tight/loose coupling with the application(s) for which it proxies, the HC Proxy could implement different media type mappings.</t>
 
-        <t>When tightly coupled, the HC Proxy knows exactly which content formats are supported by the applications and can be strict when enforcing its forwarding policies in general, and the media type mapping in particular.</t>
+        <t>When tightly coupled, the HC Proxy knows exactly which content-formats are supported by the applications and can be strict when enforcing its forwarding policies in general, and the media type mapping in particular.</t>
 
         <t>On the other hand, when the HC Proxy is a general purpose ALG, being too strict could significantly reduce the amount of traffic that it would be able to successfully forward.  In this case, the "loose" media type mapping detailed in <xref target="sec-loose-mt-mapping"/> MAY be implemented.</t>
 
@@ -542,17 +527,17 @@ The HC Proxy thus disregards the Accept/Accept-* header fields by treating the r
       <section title="'application/coap-payload' Media Type" anchor="sec-application-coap-payload">
         <t>If the HC Proxy receives a CoAP response with a Content-Format that it does not recognize (e.g., because the value has been registered after the proxy has been deployed, or the CoAP server uses an experimental value that is not registered), then the HC Proxy SHALL return a generic "application/coap-payload" media type with numeric parameter "cf" as defined in <xref target="sec-coap-payload-reg"/>.</t>
 
-        <t>For example, the CoAP content format '60' ("application/cbor") would be represented by "application/coap-payload;cf=60", if the HC Proxy doesn't recognize the content format '60'.</t>
+        <t>For example, the CoAP content-format '60' ("application/cbor") would be represented by "application/coap-payload;cf=60", if the HC Proxy doesn't recognize the content-format '60'.</t>
 
-        <t>An HTTP client may use the media type "application/coap-payload" as a means to send a specific content format to a CoAP server via an HC Proxy if the client has determined that the HC Proxy does not directly support the type mapping it needs.  This case may happen when dealing, for example, with newly registered, yet to be registered, or experimental CoAP content formats.  However, unless explicitly configured to allow pass-through of unknown content formats, the HC Proxy SHOULD NOT forward requests carrying a Content-Type or Accept header with an "application/coap-payload", and return an appropriate client error instead.</t>
+        <t>An HTTP client may use the media type "application/coap-payload" as a means to send a specific content-format to a CoAP server via an HC Proxy if the client has determined that the HC Proxy does not directly support the type mapping it needs.  This case may happen when dealing, for example, with newly registered, yet to be registered, or experimental CoAP content-formats.  However, unless explicitly configured to allow pass-through of unknown content-formats, the HC Proxy SHOULD NOT forward requests carrying a Content-Type or Accept header with an "application/coap-payload", and return an appropriate client error instead.</t>
       </section> 
 
       <section title="Loose Media Type Mapping" anchor="sec-loose-mt-mapping">
         <t>By structuring the type information in a super-class (e.g., "text") followed by a finer-grained sub-class (e.g., "html"), and optional parameters (e.g., "charset=utf-8"), Internet media types provide a rich and scalable framework for encoding the type of any given entity.</t>
 
-        <t>This approach is not applicable to CoAP, where Content Formats conflate an Internet media type (potentially with specific parameters) and a content encoding into one small integer value.</t>
+        <t>This approach is not applicable to CoAP, where content-formats conflate an Internet media type (potentially with specific parameters) and a content coding into one small integer value.</t>
 
-        <t>To remedy this loss of flexibility, we introduce the concept of a "loose" media type mapping, where media types that are specializations of a more generic media type can be aliased to their super-class and then mapped (if possible) to one of the CoAP content formats.  For example, "application/soap+xml" can be aliased to "application/xml", which has a known conversion to CoAP.  In the context of this "loose" media type mapping, "application/octet&nbhy;stream" can be used as a fallback when no better alias is found for a specific media type.</t>
+        <t>To remedy this loss of flexibility, we introduce the concept of a "loose" media type mapping, where media types that are specializations of a more generic media type can be aliased to their super-class and then mapped (if possible) to one of the CoAP content-formats.  For example, "application/soap+xml" can be aliased to "application/xml", which has a known conversion to CoAP.  In the context of this "loose" media type mapping, "application/octet&nbhy;stream" can be used as a fallback when no better alias is found for a specific media type.</t>
 
         <t><xref target="tab-generalised-mt"/> defines the default lookup table for the "loose" media type mapping.  It is expected that an implementation can refine it because either application-specific knowledge is given or new Content-Formats are defined.  Given an input media type, the table returns its best generalized media type using the most specific match, i.e., the table entries are compared to the input in top to bottom order until an entry matches.</t>
 
@@ -575,8 +560,8 @@ The HC Proxy thus disregards the Accept/Accept-* header fields by treating the r
         <t>The "loose" media type mapping is an OPTIONAL feature.  Implementations supporting this kind of mapping should provide a flexible way to define the set of media type generalizations allowed.</t>
       </section>
 
-      <section title="Media Type to Content Format Mapping Algorithm" anchor="sec-mt2cf">
-        <t>This section defines the algorithm used to map an HTTP Internet media type to its correspondent CoAP content format; it can be used as a building block for translating HTTP Content-Type and Accept headers into CoAP Content-Format and Accept Options.</t>
+      <section title="Media Type to Content-Format Mapping Algorithm" anchor="sec-mt2cf">
+        <t>This section defines the algorithm used to map an HTTP Internet media type to its correspondent CoAP content-format; it can be used as a building block for translating HTTP Content-Type and Accept headers into CoAP Content-Format and Accept Options.</t>
 
         <t>The algorithm uses an IANA-maintained table, "CoAP Content-Formats", as established by Section 12.3 of <xref target="RFC7252"/> plus, possibly, any locally defined extension of it.  Optionally, the table and lookup mechanism described in <xref target="sec-loose-mt-mapping"/> can be used if the implementation chooses so.</t>
 
@@ -744,36 +729,11 @@ def mt2cf(media_type, encoding=None,
       </texttable>
       <t>Notes:
         <list style="numbers">
-<!--[rfced] A) There is no Section 7.3.2 in RFC 7231; please let us
-know the correct section that should be referenced.
- 
-B) We included the following note to clarify that RFC 7230 
-obsoletes RFC 2616.  Please let us know of any objections.
-
-Original:
-Section 7.3.2 of [RFC7231] does not put any requirement
-on the format of the entity.  (In the past, [RFC2616] did.)
-
-Current:
-Section 7.3.2 of [RFC7231] does not put any requirement 
-on the format of the entity.  (In the past, [RFC2616]
-did. Note that [RFC2616] has been obsoleted by [RFC7230].)
--->
-          <t>A CoAP server may return an arbitrary format payload along with this response. If present, this payload MUST be returned as an entity in the HTTP 201 response. Section 7.3.2 of <xref target="RFC7231"/> does not put any requirement on the format of the entity. (In the past, <xref target="RFC2616"/> did. Note that  <xref target="RFC2616"/> has been obsoleted by <xref target="RFC7230"/>.)</t>
+          <t>A CoAP server may return an arbitrary format payload along with this response. If present, this payload MUST be returned as an entity in the HTTP 201 response. Section 6.3.2 of <xref target="RFC7231"/> does not put any requirement on the format of the entity. (In the past, <xref target="RFC2616"/> did. Note that  <xref target="RFC2616"/> has been obsoleted by <xref target="RFC7230"/>.)</t>
 
           <t>The HTTP code is 200 or 204, respectively, for the case where a CoAP server returns a payload or not.
 
-<!--[rfced] We don't see specific mention of codes 200 or 204 in
-Section 5.3 of RFC 7231.  Please confirm if this reference is
-correct or if it needs an update (perhaps the intention was to
-point to Section 6.3?).
-
-Original:
-[RFC7231] Section 5.3 requires code 200 in case a representation 
-of the action result is returned for DELETE/POST/PUT, and code 
-204 if not. 
--->
- <xref target="RFC7231"/>, Section 5.3 requires code 200 in case a representation of the action result is returned for DELETE/POST/PUT, and code 204 if not. Hence, a proxy MUST transfer any CoAP payload contained in a CoAP 2.02 response to the HTTP client using a 200 OK response.</t>
+ <xref target="RFC7231"/>, Section 6.3 requires code 200 in case a representation of the action result is returned for DELETE/POST/PUT, and code 204 if not. Hence, a proxy MUST transfer any CoAP payload contained in a CoAP 2.02 response to the HTTP client using a 200 OK response.</t>
  
           <t>HTTP code 304 (Not Modified) is sent if the HTTP client performed a conditional HTTP request and the CoAP server responded with 2.03 (Valid) to the corresponding CoAP validation request. Note that Section 4.1 of <xref target="RFC7232"/> puts some requirements on header fields that must be present in the HTTP 304 response.</t>
  
@@ -870,21 +830,21 @@ of the action result is returned for DELETE/POST/PUT, and code
       </section> 
 
       <section anchor="sec-coap-payload-reg" title="New 'coap-payload' Internet Media Type">
-        <t>This document defines the "application/coap-payload" media type with a single parameter "cf". This media type represents any payload that a CoAP message can carry, having a content format that can be identified by an integer in range 0-65535 corresponding to a CoAP Content-Format parameter (<xref target="RFC7252"/>, Section 12.3).  The parameter "cf" is the integer defining the CoAP content format.</t>
+        <t>This document defines the "application/coap-payload" media type with a single parameter "cf". This media type represents any payload that a CoAP message can carry, having a content-format that can be identified by an integer in range 0-65535 corresponding to a CoAP Content-Format parameter (<xref target="RFC7252"/>, Section 12.3).  The parameter "cf" is the integer defining the CoAP content-format.</t>
 
         <t>Type name: application</t>
 
         <t>Subtype name: coap-payload</t>
 
-        <t>Required parameters: cf (CoAP Content-Format integer in range 0-65535 denoting the content format of the CoAP payload carried, as defined by the "CoAP Content-Formats" subregistry that is part of the "Constrained RESTful Environments (CoRE) Parameters" registry).</t>
+        <t>Required parameters: "cf" (CoAP Content-Format integer in range 0-65535 denoting the content-format of the CoAP payload carried, as defined by the "CoAP Content-Formats" subregistry that is part of the "Constrained RESTful Environments (CoRE) Parameters" registry).</t>
 
         <t>Optional parameters: None</t>
 
-        <t>Encoding considerations: Common use is BINARY.  The specific CoAP content-format encoding considerations for the selected Content-Format (cf parameter) apply.  The encoding can vary based on the value of the cf parameter.</t>
+        <t>Encoding considerations: Common use is BINARY.  The specific CoAP content-format encoding considerations for the selected Content-Format ("cf" parameter) apply.  The encoding can vary based on the value of the "cf" parameter.</t>
 
-        <t>Security considerations: The specific CoAP content-format security considerations for the selected Content-Format (cf parameter) apply.</t>
+        <t>Security considerations: The specific CoAP content-format security considerations for the selected Content-Format ("cf" parameter) apply.</t>
 
-        <t>Interoperability considerations: This media type can never be used directly in CoAP messages because there are no means available to encode the mandatory 'cf' parameter in CoAP.</t>
+        <t>Interoperability considerations: This media type can never be used directly in CoAP messages because there are no means available to encode the mandatory "cf" parameter in CoAP.</t>
 		
 		<t>Published specification: RFC 8075</t>
 
@@ -1099,7 +1059,7 @@ import re
 
 class CoAPContentFormatRegistry(object):
     """Map an Internet media type (and optional inherent encoding) to a
-       CoAP content format.
+       CoAP Content-Format.
     """
     TEXT_PLAIN = 0
     LINK_FORMAT = 40
@@ -1124,7 +1084,7 @@ class CoAPContentFormatRegistry(object):
     }
 
     def lookup(self, media_type, encoding):
-        """Return the CoAP Content Format matching the supplied
+        """Return the CoAP Content-Format matching the supplied
            media type (and optional encoding), or None if no
            match can be found."""
         return CoAPContentFormatRegistry.LOOKUP_TABLE.get(
@@ -1339,47 +1299,6 @@ if __name__ == "__main__":
       for helpful comments and discussions that have shaped the document.</t>
  
       <t>The research leading to these results has received funding from the European Community's Seventh Framework Programme [FP7/2007-2013] under grant agreement n.251557.</t>
-
-<!-- [rfced] Throughout the text, the following terminology appears to be used 
-inconsistently.  
-
-Please review these occurrences and let us know if/how they may be made 
-consistent.  
-
-"cf" vs. 'cf' vs. cf
-
-CoAP Server vs. server (specifically in Figure 1)
-
-Content-Encoding vs. content encoding
-
-Content Formats vs. Content-Formats vs. content formats*
-
-Forward Proxy vs. Forward-Proxy vs. forward-proxy**
-
-*Per the IANA registry name ("CoAP Content-Formats") and use
- in RFC 7252, should this term be capitalized and hyphenated 
- throughout the text (i.e, 'Content-Formats')?
-
-**To match RFC 7252, should all instances of 'Forward Proxy'
-  and 'Reverse Proxy' be hyphenated and lowercased in the
-  text (i.e., 'forward-proxy' and 'reverse-proxy')?
-
--->
-
-<!-- [rfced] Throughout the text, the following terminology is
-consistent but use is different in the references.
-
-Please review these occurrences and let us know if any updates 
-are needed.
-
-Effective Request URI [appears as "effective request URI" in RFC 7230]
-
-URI template [appears as "URI Template" in RFC 6570]
-
--->
-
-
-
     </section>
   </back>
 </rfc>
