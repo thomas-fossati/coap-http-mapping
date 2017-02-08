@@ -1,3 +1,3 @@
-ID := draft-ietf-core-http-mapping-17
+ID := rfc8075
 
 include ../id.mk
